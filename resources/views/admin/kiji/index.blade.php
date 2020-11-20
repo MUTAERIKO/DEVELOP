@@ -44,7 +44,7 @@
                      @foreach($posts as $content)
                        <li>
                            <div class="title-on">
-                               <a href={{ action('Admin\KijiController@edit', ['id' => $content->id]) }}>
+                               <a href={{ action('Admin\KijiController@show', ['id' => $content->id]) }}>
                                <img src="{{ asset('storage/image/' . $content->image_path) }}" class="mainpageimage">
                                </a>
                                <p>{{ $content->title }}</p>

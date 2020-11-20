@@ -13,5 +13,23 @@ class Content extends Model
         'image'   => 'required',
         'seireki' => 'required',
         'body'    => 'required',
-        );
+        'user_id' => 'required',
+    );
+
+    public static $update_rules = array(
+        'title'   => 'required',
+        'seireki' => 'required',
+        'body'    => 'required',
+    );
+        
+    public function histories()
+    {
+        return $this->hasMany('App\History');
+    }
+    
+    public function users()
+    {
+        return $this->hasMany('App\User');
+    }    
+    
 }

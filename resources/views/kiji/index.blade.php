@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <h2>コンテンツ一覧</h2>
+        <h2>サインインなし_コンテンツ一覧</h2>
         </div>
         
         <div class="row">
@@ -14,7 +14,7 @@
             </div>
             
             <div class="col-md-8">
-                <form action="{{ action('Admin\KijiController@index') }}" method="get">
+                <form action="{{ action('KijiController@index') }}" method="get">
                     <div class="form-group row">
                         <label class="col-md-2">タイトル検索</label>
                         <div class="col-md-8">
@@ -44,7 +44,7 @@
                      @foreach($posts as $content)
                        <li>
                            <div class="title-on">
-                               <a href={{ action('Admin\KijiController@edit', ['id' => $content->id]) }}>
+                               <a href={{ action('KijiController@show', ['id' => $content->id]) }}>
                                <img src="{{ asset('storage/image/' . $content->image_path) }}" class="mainpageimage">
                                </a>
                                <p>{{ $content->title }}</p>

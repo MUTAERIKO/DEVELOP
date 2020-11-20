@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Content;
 
+use App\History;
+use Carbon\Carbon;
+
+use App\User;
+
+
 class KijiController extends Controller
 {
     public function add()
@@ -33,6 +39,11 @@ class KijiController extends Controller
         $content->fill($form);
         $content->save();
         
+        $user = new User;
+        $user->user_id = $content->id;
+        $user = save();
+        
+        
         
         return redirect('admin/kiji/');
        //return redirect('admin/kiji/create');
@@ -52,7 +63,19 @@ class KijiController extends Controller
     
     
     
-      public function edit(Request $request)
+      public function show(Request $request)
+  {
+      // News Modelからデータを取得する
+      $content = Content::find($request->id);
+      
+      if (empty($content)) {
+        abort(404);    
+      }
+      return view('admin.kiji.show', ['content_form' => $content]);
+  }
+  
+  
+  public function edit(Request $request)
   {
       // News Modelからデータを取得する
       $content = Content::find($request->id);
@@ -63,10 +86,11 @@ class KijiController extends Controller
       return view('admin.kiji.edit', ['content_form' => $content]);
   }
   
+  
   public function update(Request $request)
   {
       // Validationをかける
-      $this->validate($request, Content::$rules);
+      $this->validate($request, Content::$update_rules);
       // News Modelからデータを取得する
       $content = Content::find($request->id);
       // 送信されてきたフォームデータを格納する
@@ -89,6 +113,11 @@ class KijiController extends Controller
 
       // 該当するデータを上書きして保存する
       $content->fill($content_form)->save();
+      
+      $history = new History;
+      $history->content_id = $content->id;
+      $history->edited_at = Carbon::now();
+      $history->save();
 
       return redirect('admin/kiji/');
   }

@@ -20,6 +20,7 @@ class CreateContentsTable extends Migration
             $table->string('seireki');
             $table->string('body');
             $table->string('googlemap');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

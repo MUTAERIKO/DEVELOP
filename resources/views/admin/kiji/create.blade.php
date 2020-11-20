@@ -15,12 +15,26 @@
                     @endforeach
                 </ul>
                 @endif
-                <div class="form-group row">
+                
+　
+                 <div class="form-group row">
+                    <label class="col-md-2" for="user_id">id</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="user_id" value="{{ 123 }}">
+                    </div>
+                 </div>
+                 
+                 <?php var_dump($user);?>
+                 
+                 
+                 
+                 <div class="form-group row">
                     <label class="col-md-2" for="title">タイトル</label>
                     <div class="col-md-10">
                         <input type="text" class="form-control" name="title" value="{{ old('title') }}">
                     </div>
                  </div>
+                 
                  
                <div class="form-group row">
                  <label class="col-md-2" for="title">画像</label>
@@ -33,7 +47,8 @@
                  <div class="form-group row">
                     <label class="col-md-2" for="seireki">西暦</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" name="seireki" value="{{ old('seireki') }}">
+                        <label>年/月/日：<input type="date" class="form-control" name="seireki" value="{{ old('seireki') }}"></label>
+                        
                     </div>
                     </div>
                     <div class="form-group row">
