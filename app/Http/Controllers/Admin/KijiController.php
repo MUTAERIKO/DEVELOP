@@ -39,12 +39,7 @@ class KijiController extends Controller
         $content->fill($form);
         $content->save();
         
-        $user = new User;
-        $user->user_id = $content->id;
-        $user = save();
-        
-        
-        
+    
         return redirect('admin/kiji/');
        //return redirect('admin/kiji/create');
       
