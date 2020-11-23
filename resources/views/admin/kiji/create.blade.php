@@ -21,8 +21,8 @@
                     <label class="col-md-2" for="name">投稿者名</label>
                     <div class="col-md-10">
                     
-                        <input type="hidden" class="form-control" name="user_id" value="{{ 'user_id' }}">
-                        <input type="text" class="form-control" name="name" value="{{ 'name' }}">
+                        <input type="hidden" class="form-control" name="user_id" value="{{ user_id }}"> 
+                        <input type="text" class="form-control" name="name" value="{{ $kiji->user }}">
                     </div>
                  </div>
 

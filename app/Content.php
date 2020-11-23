@@ -27,7 +27,7 @@ class Content extends Model
         return $this->hasMany('App\History');
     }
     
-    public function users()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }    
