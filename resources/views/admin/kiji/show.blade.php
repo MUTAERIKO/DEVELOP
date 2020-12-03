@@ -17,9 +17,9 @@
                 
                 
                 <div class="form-group row">
-                    <label class="col-md-2" for="pro_name">制作者</label>
+                    <label class="col-md-2" for="name">投稿者名</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" name="pro_name" value="{{ 'pro_name' }}">
+                        <input type="text" class="form-control" name="name" value="{{ $user_name }}" disabled>
                     </div>
                  </div>
                  
@@ -77,7 +77,7 @@
                     -->
                     
                     
-                    @login
+                    @auth
                     <div class="form-group row">
                         <div class="col-md-10">
                             <a href={{ action('Admin\KijiController@edit', ['id' => $content_form->id]) }}>
@@ -85,7 +85,21 @@
                             </a>
                         </div>
                     </div>
-                    @login
+                    @endauth
+                    
+                    
+                    <div class="form-group row">
+                        <div class="col-md-10">
+                            <a href={{ action('Admin\KijiController@edit', ['id' => $content_form->id]) }}>
+                                <input type="button" class="btn btn-primary" value="コメント投稿する">
+                            </a>
+                        </div>
+                    </div>
+                    
+                    
+                    
+
+                        
                 
                     <div class="row mt-5">
                         <div class="col-md-4 mx-auto">
@@ -93,7 +107,8 @@
                                 <ul class="list-group">
                                  @if ($content_form->histories != NULL)
                                 @foreach ($content_form->histories as $history)
-                                    <li class="list-group-item">{{ $history->edited_at }}</li>
+                                    <li class="list-group-item">{{ $history->edited_at }}／{{ $user_name }}</li>
+                                    
                                 @endforeach
                             @endif
                         </ul>

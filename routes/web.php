@@ -21,18 +21,13 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function() {
     Route::post('kiji/edit','Admin\KijiController@update');
     
     Route::get('kiji/show','Admin\KijiController@show');
-    Route::post('kiji/show','Admin\KijiController@show');
+
     
+    Route::post('kiji/toukou/{id}','Admin\KijiController@toukou');
+    
+    Route::get('kiji/toukoudelete/{content_id}/{question_id}','Admin\KijiController@toukoudelete');
     Route::get('kiji/delete','Admin\KijiController@delete');
     
-    Route::get('profile/create', 'Admin\ProfileController@add');
-    Route::post('profile/create', 'Admin\ProfileController@create');
-    
-    Route::get('profile','Admin\ProfileController@index');
-    Route::post('profile','Admin\ProfileController@index');
-    
-    Route::get('profile/edit', 'Admin\ProfileController@edit');
-    Route::post('profile/edit', 'Admin\ProfileController@update');
     
 });
 
@@ -67,5 +62,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'KijiController@index'); 
 Route::get('kiji/show','KijiController@show');
 Route::post('kiji/show','KijiController@show');
+
+Route::post('kiji/toukou','KijiController@toukou');
+
 
 

@@ -84,8 +84,7 @@
                         </div>
                     
                         <div class="col-md-1">
-                            <a href="{{ action('Admin\KijiController@delete', ['id' => $content_form->id]) }}">
-                            <input type="submit" class="btn btn-primary" value="削除"></a>
+                            <a class="btn btn-danger" href="{{ action('Admin\KijiController@delete', ['id' => $content_form->id]) }}">削除</a>
                         </div>
                     </div>
                 </form>

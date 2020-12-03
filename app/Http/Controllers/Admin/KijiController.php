@@ -10,43 +10,69 @@ use App\History;
 use Carbon\Carbon;
 
 use App\User;
+use App\Question;
+
+use Illuminate\Support\Facades\Auth;
 
 
 class KijiController extends Controller
 {
     public function add()
     {
-        return view('admin.kiji.create');
+        $user = Auth::user();
+        $user_name = $user->name;
+        var_dump($user_name);
+
+        return view('admin.kiji.create',compact('user_name'));
     }
     
+    
+// blade.phpの<form action>から</form>までのinputタグで呼んだものの動きを表記
+// $requestがそれらを呼んできている
     public function create(Request $request)
     {
-        $this->validate($request, Content::$rules);
+        // Content.phpで表示したrulesとのバリデートを行う
+        $request->validate(Content::$rules);
+        // 新規コンテンツを$contentとする
         $content = new Content;
+        // インプットタグで呼んできたもの（$request）を全てフォームに入れる
         $form = $request->all();
         
+        // 画像の処理
+        // もしformにimageが存在したら〜
        if (isset($form['image'])){
+           
+        //   「インプットタグから呼んできたfileのimageをstoreで格納する」っているのを$pathで定義する
         $path = $request->file('image')->store('public/image');
+        // 上記の$pathをファイルの名前として呼んで、（$content -> image_path）で定義する
         $content -> image_path = basename($path);
+        // (image)が存在しなければ、（$content -> image_path）は空欄で良いとする
         } else {
             $content->image_path = null;
         }
         
-        
+        // formでは['_token']が取れるので、取り除く。今回はimageも使用しないので取り除く。
         unset($form['_token']);
         unset($form['image']);
         
+        // 作成したデータをフォームにいれて
         $content->fill($form);
+        // ログイン時のidデータを、作成したデータのuser_idに紐付ける
+        $content->user_id = Auth::id();
+        // 作成したデータを保存する
         $content->save();
         
-    
-        return redirect('admin/kiji/');
+        // admin/kiji/にリダイレクトさせる
+        return redirect('/');
        //return redirect('admin/kiji/create');
       
     }
     
         public function index(Request $request)
     {
+        
+        // <form action="{{ action('Admin\KijiController@index')〜で入れたinputを
+        // requestで読み込み、＄cond_titleと新たに定義した
         $cond_title = $request->cond_title;
         if ($cond_title !='') {
             $posts = Content::where('title','like','%'.$cond_title.'%')->orderBy('created_at','desc')->get();
@@ -60,13 +86,19 @@ class KijiController extends Controller
     
       public function show(Request $request)
   {
-      // News Modelからデータを取得する
+      // Contents Modelからデータを取得する
       $content = Content::find($request->id);
       
       if (empty($content)) {
         abort(404);    
       }
-      return view('admin.kiji.show', ['content_form' => $content]);
+      
+      
+      $user = Auth::user();
+        $user_name = $user->name;
+        var_dump($user_name);
+    
+      return view('admin.kiji.show', ['content_form' => $content],compact('user_name'));
   }
   
   
@@ -118,10 +150,34 @@ class KijiController extends Controller
   }
   
   
+//   コメント追加
+public function toukou(Request $request, $id)
+    {
+        $this->validate($request,Question::$rules);
+        $question = new Question;
+        $form = $request->all();
+        
+        unset($form['_token']);
+        $question->fill($form);
+        $question->save();
+        
+        return redirect('kiji/show?id=' . $id);
+    }
+    
+    
+    public function toukoudelete($content_id, $question_id)
+  {
+      $question = Question::find($question_id);
+      $question->delete();
+
+      return redirect('kiji/show?id=' . $content_id);
+  }
+  
+  
     public function delete(Request $request)
   {
       $content = Content::find($request->id);
-      $content = delete();
+      $content->delete();
 
       return redirect('admin/kiji/');
   }

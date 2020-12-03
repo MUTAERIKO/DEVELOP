@@ -10,6 +10,8 @@ use App\Content;
 use App\History;
 use Carbon\Carbon;
 
+use App\Question;
+
 class KijiController extends Controller
 {
     public function index(Request $request)
@@ -81,6 +83,19 @@ class KijiController extends Controller
       $history->save();
 
       return redirect('/');
+  }
+  
+   public function toukou(Request $request)
+  {
+      // 投稿画面の追加
+      $this->validate($request, Question::$rules);
+      $question = new Question;  
+      $form = $request->all();
+      
+      unset($form['_token']);
+      $question->fill($question_form)->save();
+      
+      return redirect('kiji/show');
   }
   
 }

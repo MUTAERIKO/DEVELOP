@@ -21,8 +21,8 @@
                     <label class="col-md-2" for="name">投稿者名</label>
                     <div class="col-md-10">
                     
-                        <input type="hidden" class="form-control" name="user_id" value="{{ user_id }}"> 
-                        <input type="text" class="form-control" name="name" value="{{ $kiji->user }}">
+                        
+                        <input type="text" class="form-control" name="name" value="{{ $user_name }}" disabled>
                     </div>
                  </div>
 
@@ -36,10 +36,11 @@
                  
                  
                <div class="form-group row">
-                 <label class="col-md-2" for="title">画像</label>
+                 <label class="col-md-2" for="image">画像</label>
                     <div class="col-md-10">
                         <input type="file" class="form-control-file" name="image" value="{{ old('image') }}">
                     </div>
+                   
                  </div>
                  
                  
@@ -59,7 +60,7 @@
                     <div class="form-group row">
                         <label class="col-md-2" for="googlemap">Googlemap</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="Googlemap" rows="5">{{ old('googlemap') }}</textarea>
+                            <textarea class="form-control" name="googlemap" rows="5">{{ old('googlemap') }}</textarea>
                         </div>
                     </div>
                     

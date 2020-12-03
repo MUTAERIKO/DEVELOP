@@ -13,7 +13,7 @@ class Content extends Model
         'image'   => 'required',
         'seireki' => 'required',
         'body'    => 'required',
-        'user_id' => 'required',
+        'googlemap'    => 'required',
     );
 
     public static $update_rules = array(
@@ -21,6 +21,7 @@ class Content extends Model
         'seireki' => 'required',
         'body'    => 'required',
     );
+    
         
     public function histories()
     {
@@ -30,6 +31,12 @@ class Content extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
-    }    
+    } 
+    
+    public function questions()
+    {
+        return $this->hasMany('App\Question');
+    }
+
     
 }
