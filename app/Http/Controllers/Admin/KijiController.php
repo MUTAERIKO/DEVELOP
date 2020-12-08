@@ -11,6 +11,9 @@ use Carbon\Carbon;
 
 use App\User;
 use App\Question;
+use App\Mail\SendMail;
+
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -161,6 +164,22 @@ public function toukou(Request $request, $id)
         $question->fill($form);
         $question->save();
         
+        
+        // コメントの投稿があったら、この記事を投稿した人にメールを配信して知らせたい
+        $user = Auth::user();
+        // Mail::to($user)->send(new Question($toukou));
+        $content = $question->content;
+        $data = [
+            'subject' => 'コメントが投稿されました',
+            'toukou' => $question->toukou,
+            'template' => 'email.reply',
+            'name' => 'システムメール',
+            'email' => 'aaa@XXX.com',
+            'title' => $content->title,
+            'reply_name' => $user->name,
+        ];
+        Mail::to($question->content->user->email)->send(new SendMail($data));
+
         return redirect('kiji/show?id=' . $id);
     }
     
@@ -181,6 +200,8 @@ public function toukou(Request $request, $id)
 
       return redirect('admin/kiji/');
   }
+  
+  
 }
 
 

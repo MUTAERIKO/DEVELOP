@@ -28,6 +28,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function() {
     Route::get('kiji/toukoudelete/{content_id}/{question_id}','Admin\KijiController@toukoudelete');
     Route::get('kiji/delete','Admin\KijiController@delete');
     
+    Route::get('register/register_mail','Admin\MailFormController@index');
+    Route::post('register/register_mail','Admin\MailFormController@send');
     
 });
 
@@ -64,6 +66,4 @@ Route::get('kiji/show','KijiController@show');
 Route::post('kiji/show','KijiController@show');
 
 Route::post('kiji/toukou','KijiController@toukou');
-
-
 

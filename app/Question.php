@@ -12,4 +12,10 @@ class Question extends Model
         // 'content_id' => 'required',
         // 'toukou' => 'required',
         );
+        
+    public function content()
+    {
+        return $this->belongsTo('App\Content');
+    } 
+    
 }
