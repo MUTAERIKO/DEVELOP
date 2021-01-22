@@ -89,6 +89,7 @@ class KijiController extends Controller
     
       public function show(Request $request)
   {
+      
       // Contents Modelからデータを取得する
       $content = Content::find($request->id);
       
@@ -154,7 +155,7 @@ class KijiController extends Controller
   
   
 //   コメント追加
-public function toukou(Request $request, $id)
+public function toukou(Request $request)
     {
         $this->validate($request,Question::$rules);
         $question = new Question;
@@ -180,7 +181,7 @@ public function toukou(Request $request, $id)
         ];
         Mail::to($question->content->user->email)->send(new SendMail($data));
 
-        return redirect('kiji/show?id=' . $id);
+        return redirect('kiji/show?id=' . $request->content_id);
     }
     
     

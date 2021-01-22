@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 use App\Question;
 
+
 class KijiController extends Controller
 {
     public function index(Request $request)
@@ -22,17 +23,20 @@ class KijiController extends Controller
         } else {
             $posts = Content::all()->sortByDesc('updated_at');
         }
+    
+
         return view('kiji.index', ['posts' => $posts, 'cond_title' => $cond_title]);
     }
     
-      public function show(Request $request)
+      public function show($id)
   {
       // News Modelからデータを取得する
-      $content = Content::find($request->id);
+      $content = Content::find($id);
       
       if (empty($content)) {
         abort(404);    
       }
+      
       return view('kiji.show', ['content_form' => $content]);
   }
   
@@ -84,8 +88,7 @@ class KijiController extends Controller
 
       return redirect('/');
   }
-  
-   public function toukou(Request $request)
+ public function toukou(Request $request)
   {
       // 投稿画面の追加
       $this->validate($request, Question::$rules);
@@ -93,9 +96,40 @@ class KijiController extends Controller
       $form = $request->all();
       
       unset($form['_token']);
-      $question->fill($question_form)->save();
+      $question->fill($form)->save();
       
-      return redirect('kiji/show');
+      
+      return redirect('kiji/show/' . $request->content_id);
   }
+  
+  public function ajaxlike(Request $request)
+    {
+        $id = Auth::user()->id;
+        $content_id = $request->content_id;
+        $like = new Like;
+        $post = Content::findOrFail($content_id);
+        //loadCountとすればリレーションの数を○○_countという形で取得できる（今回の場合はいいねの総数）
+        $postLikesCount = $post->loadCount('likes')->likes_count;
+
+        // 空でない（既にいいねしている）なら
+        if ($like->like_exist($id, $content_id)) {
+            //likesテーブルのレコードを削除
+            $like = Like::where('content_id', $content_id)->where('user_id', $id)->delete();
+        } else {
+            //空（まだ「いいね」していない）ならlikesテーブルに新しいレコードを作成する
+            $like = new Like;
+            $like->content_id = $request->content_id;
+            $like->user_id = Auth::user()->id;
+            $like->save();
+        }
+
+        //一つの変数にajaxに渡す値をまとめる
+        //今回ぐらい少ない時は別にまとめなくてもいいけど一応。笑
+        $json = [
+            'postLikesCount' => $postLikesCount,
+        ];
+        //下記の記述でajaxに引数の値を返す
+        return response()->json($json);
+    }
   
 }

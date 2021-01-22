@@ -2,6 +2,7 @@
 @section('title','【編集】年表・地図つきメモ帳 ~ 観光や歴史の勉強向き ~')
 
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
@@ -76,7 +77,7 @@
                     -->
                     
                     
-                    @auth
+                    @if($content_form->user_id === Auth::id())
                     <div class="form-group row">
                         <div class="col-md-10">
                             <a href={{ action('Admin\KijiController@edit' ,['id'=> $content_form->id] ) }}>
@@ -84,12 +85,13 @@
                             </a>
                         </div>
                     </div>
+                    @endif
             </form>   
             
             
-                       
+            @auth           
             <div style="margin-bottom:10rem;"></div>           
-            <form action="{{ action('Admin\KijiController@toukou',['id'=> $content_form->id]) }}" method="post" enctype="multipart/form-data">    
+            <form action="{{ action('KijiController@toukou') }}" method="post" enctype="multipart/form-data">    
                 <div class="form-group row">
                     <label class="col-md-2" for="toukou">コメントする</label>
                     <div class="col-md-10">
@@ -113,37 +115,29 @@
                                        
                      </div>
                         </div>
+                @endauth
+                    
+                    
 
-                        
-
-                    @endauth
-                    
-                    
-                
-
-                    
-                    
-                    <div class="row mt-5">
+                    <div id="comment" class="row mt-5">
                         <div class="col-md-4 mx-auto">
                              <h2>コメント欄</h2>
                                 <ul class="list-group">
                                  @if ($content_form->questions != NULL)
-                                @foreach ($content_form->questions->reverse() as $question)
-                                   <li class="list-group-item">{{ $question->toukou }}</li>
-                                        <form action="{{ action('Admin\KijiController@toukoudelete',['question_id'=> $question->id, 'content_id' => $content_form->id]) }}" method="get" enctype="multipart/form-data">
-                                            <input type="submit" class="btn btn-primary" value="削除" name="question">
-                                            
-                                        
-                                            <div style="margin-bottom:1rem;"></div>
-                                        </form>
-                                @endforeach
-                            @endif
-                                </ul>
+                                 {!! $comments = $content_form->questions()->orderBy('id','desc')->paginate(10); !!}
+                                 
+                                    @foreach ($comments as $question)
+                                        <li class="list-group-item">{{ $question->toukou }}</li>
+                                    @endforeach
+                                 @endif
+                                 <div style="margin-bottom:1rem;"></div>
+                                 </ul>
                         </div>
                     </div>
                     
+                
                     
-                                        <div class="row mt-5">
+                    <div class="row mt-5">
                         <div class="col-md-4 mx-auto">
                              <h2>編集履歴</h2>
                                 <ul class="list-group">
@@ -155,6 +149,32 @@
                                 </ul>
                         </div>
                     </div>
+                    
+                    
+                    
+                    
+<div class="container">
+  <button class="button" data-modal-open="modal-1">
+    OPEN
+  </button>
+  
+  <div class="modal" id="modal-1">
+    <div class="modal-overlay" data-modal-close>
+      <div class="modal-container">
+        <h2 class="modal-title">モーダルウィンドウ</h2>
+        <div class="modal-content">
+          <p>モーダルウィンドウ（英: modal window）は、コンピュータアプリケーションソフトウェアのユーザインタフェース設計において、何らかのウィンドウの子ウィンドウとして生成されるサブ要素のうち、ユーザーがそれに対して適切に応答しない限り、制御を親ウィンドウに戻さないもの。</p>
+        </div>
+        <div class="modal-footer">
+          <button class="button" data-modal-close="modal-1">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
                 
                 
 

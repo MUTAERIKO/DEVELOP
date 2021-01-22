@@ -55,6 +55,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('messages.Login') }}
                                 </button>
+                                <a  class="btn btn-primary" href="{{ action('Auth\AuthController@redirectToProvider') }}">githubでログイン</a>
+                                <a  class="btn btn-primary" href="{{ action('Auth\AuthController@redirectToGoogle') }}">googleでログイン</a>
                             </div>
                         </div>
                     </form>

@@ -10,12 +10,16 @@
         
         <title>@yield('title')</title>
         <script src="{{ secure_asset('js/app.js') }}" defer></script>
+        <script src="{{ secure_asset('js/kiji.js') }}" defer></script>
+        <script src="{{ secure_asset('js/pagedisplay.js') }}" defer></script>
         
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
         
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/admin.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
         
     </head>
     <body>
@@ -67,5 +71,5 @@
                 @yield('content')
                 </main>
             </div>
-        </body>
+          </body>  
     </html>

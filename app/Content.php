@@ -37,6 +37,11 @@ class Content extends Model
     {
         return $this->hasMany('App\Question');
     }
+    
+    public function favorite_users()
+    {
+        return $this->belongsToMany(User::class,'favorites','content_id','user_id')->withTimestamps();
+    }
 
     
 }

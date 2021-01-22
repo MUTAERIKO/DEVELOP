@@ -33,5 +33,18 @@ return [
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
     ],
+    
+    'github' => [
+        'client_id' => '2d09f8b7a5340ebc2cd0',
+        'client_secret' => '1f48e2ae45b87865bf586175e229a52c6a7bda7a',
+        'redirect' => 'https://7e057ed4e16143888b532618f34a505f.vfs.cloud9.us-east-2.amazonaws.com/user/github/callback',
+    ],
+
+
+    'google' => [
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    'redirect' => 'https://7e057ed4e16143888b532618f34a505f.vfs.cloud9.us-east-2.amazonaws.com/user/google/callback',
+    ],
 
 ];

@@ -11,6 +11,7 @@
         <div class="row">
             <div class="col-md-4">
                 <a href="{{ action('Admin\KijiController@add') }}" role="button" class="btn btn-primary">新規作成</a>
+                <a href="{{ action('Admin\MailFormController@send') }}" role="button" class="btn btn-primary">問い合わせ</a>
             </div>
             
             <div class="col-md-8">

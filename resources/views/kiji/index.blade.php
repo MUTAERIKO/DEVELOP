@@ -45,12 +45,17 @@
                      @foreach($posts as $content)
                        <li>
                            <div class="title-on">
-                               <a href={{ action('KijiController@show', ['id' => $content->id]) }}>
+                               <a href="kiji/show/{{ $content->id }}">
                                <img src="{{ asset('storage/image/' . $content->image_path) }}" class="mainpageimage">
                                </a>
                                <p>{{ $content->title }}</p>
+                               <i class="fab fa-angellist"></i>
+                               
                            </div>
                        </li>
+                       
+                       
+                       
                        
                     @endforeach
                     </ul>
