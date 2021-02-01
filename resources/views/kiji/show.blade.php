@@ -124,11 +124,16 @@
                              <h2>コメント欄</h2>
                                 <ul class="list-group">
                                  @if ($content_form->questions != NULL)
-                                 {!! $comments = $content_form->questions()->orderBy('id','desc')->paginate(10); !!}
+                                 @php 
+                                 $comments = $content_form->questions()->orderBy('id','desc')->paginate(10); 
+                                 @endphp
                                  
                                     @foreach ($comments as $question)
                                         <li class="list-group-item">{{ $question->toukou }}</li>
                                     @endforeach
+                                    
+                                    {{ $comments->links() }}
+                                    
                                  @endif
                                  <div style="margin-bottom:1rem;"></div>
                                  </ul>

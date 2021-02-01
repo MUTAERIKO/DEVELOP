@@ -42,6 +42,7 @@
                         
                       
                     <ul class ="grid-top">
+                        
                      @foreach($posts as $content)
                        <li>
                            <div class="title-on">
@@ -49,9 +50,13 @@
                                <img src="{{ asset('storage/image/' . $content->image_path) }}" class="mainpageimage">
                                </a>
                                <p>{{ $content->title }}</p>
-                               <i class="fab fa-angellist"></i>
                                
-                           </div>
+                                <p class="favorite-marke">
+                                  <a class="js-like-toggle {{ $like_model->like_exist(Auth::user()->id,$content->id) ? "loved" : null }}"  id="content-{{ $content->id }}"  data-postid="{{ $content->id }}"><i class="fas fa-heart"></i></a>
+                                  <span class="likesCount">{{$content->favorites()->count()}}</span>
+                                </p>
+
+                            </div>
                        </li>
                        
                        
@@ -65,11 +70,9 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>   
   @endsection          
             
            
            
  
-           
-  

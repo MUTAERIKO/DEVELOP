@@ -76,9 +76,8 @@ Route::get('user/google', 'Auth\AuthController@redirectToGoogle');
 Route::get('user/google/callback', 'Auth\AuthController@handleGoogleCallback');
 
 
-Route::group(['middleware'=>'auth'],function(){
-    Route::group(['prefix'=>'content/{id}'],function(){
-       Route::post('favorite','FavoriteController@store')->name('favorites.favorite');
-       Route::delete('unfavorite','FavoriteController@destroy')->name('favorites.unfavorite');
-    });
+//ログイン中のユーザーのみアクセス可能
+Route::group(['middleware' => ['auth']], function () {
+    //「ajaxlike.jsファイルのurl:'ルーティング'」に書くものと合わせる。
+    Route::post('favorite', 'FavoriteController@favorite');
 });

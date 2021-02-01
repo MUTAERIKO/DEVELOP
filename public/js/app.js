@@ -49541,6 +49541,8 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./favorite.js */ "./resources/js/favorite.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -49676,6 +49678,73 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/favorite.js":
+/*!**********************************!*\
+  !*** ./resources/js/favorite.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// $(function () {
+// var like = $('.js-like-toggle');
+// var likePostId;
+// like.on('click', function () {
+//     var $this = $(this);
+//     likePostId = $this.data('postid');
+//     $.ajax({
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             },
+//             url: '/favorite',  //routeの記述
+//             type: 'POST', //受け取り方法の記述（GETもある）
+//             data: {
+//                 'content_id': likePostId //コントローラーに渡すパラメーター
+//             },
+//     })
+//         // Ajaxリクエストが成功した場合
+//         .done(function (data) {
+// //lovedクラスを追加
+//             $this.toggleClass('loved'); 
+//             //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+//             $this.next('.likesCount').html(data.postLikesCount); 
+//         })
+//         // Ajaxリクエストが失敗した場合
+//         .fail(function (data, xhr, err) {
+// //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
+// //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
+//             console.log('エラー');
+//             console.log(err);
+//             console.log(xhr);
+//         });
+//     return false;
+// });
+// });
+$(function () {
+  $('.js-like-toggle').on('click', function () {
+    console.log($(this).data("postid"));
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/favorite',
+      type: 'post',
+      data: {
+        'content_id': $(this).data("postid")
+      }
+    }).done(function (data) {
+      console.log(data.content_id);
+      $('#content-' + data.content_id).toggleClass('loved');
+      $('#content-' + data.content_id).next('.likesCount').html(data.count);
+    }).fail(function (data, status, err) {
+      console.log('エラー');
+      console.log(err);
+      console.log(data);
+    });
+  });
+});
 
 /***/ }),
 

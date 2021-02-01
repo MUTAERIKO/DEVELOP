@@ -7,9 +7,9 @@
       });
        
      var params = location.href.split('?');
-     if (params.length > 1 ) {
+    if (params.length > 1 ) {
           $('html,body').animate({scrollTop:$('#comment').offset().top}); 
-     }
+    }
   });
   
   

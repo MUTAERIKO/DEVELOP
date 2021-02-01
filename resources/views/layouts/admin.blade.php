@@ -12,7 +12,9 @@
         <script src="{{ secure_asset('js/app.js') }}" defer></script>
         <script src="{{ secure_asset('js/kiji.js') }}" defer></script>
         <script src="{{ secure_asset('js/pagedisplay.js') }}" defer></script>
+        <script src="{{ secure_asset('js/favorite.js') }}" defer></script>
         
+          
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
         
@@ -23,6 +25,7 @@
         
     </head>
     <body>
+        
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-dark navbar-laravel">
                 <div class="container">

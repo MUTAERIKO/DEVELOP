@@ -9,7 +9,7 @@ use App\Content;
 
 use App\History;
 use Carbon\Carbon;
-
+use App\Favorite;
 use App\Question;
 
 
@@ -24,8 +24,21 @@ class KijiController extends Controller
             $posts = Content::all()->sortByDesc('updated_at');
         }
     
+        
+        $data = [];
+        // ユーザの投稿の一覧を作成日時の降順で取得
+        //withCount('テーブル名')とすることで、リレーションの数も取得できます。
+        $contents = Content::withCount('favorites')->orderBy('created_at', 'desc')->paginate(10);
+        $like_model = new Favorite;
 
-        return view('kiji.index', ['posts' => $posts, 'cond_title' => $cond_title]);
+        $data = [
+                'content' => $contents,
+                'like_model'=>$like_model,
+            ];
+    
+        return view('kiji.index', ['posts' => $posts, 'cond_title' => $cond_title, "like_model" => $like_model,"content" => $contents]);
+
+        // return view('kiji.index', ['posts' => $posts, 'cond_title' => $cond_title]);
     }
     
       public function show($id)

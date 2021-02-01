@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
+use App\Favorite;
 
 class Content extends Model
 {
@@ -38,10 +40,12 @@ class Content extends Model
         return $this->hasMany('App\Question');
     }
     
-    public function favorite_users()
+    public function favorites()
     {
-        return $this->belongsToMany(User::class,'favorites','content_id','user_id')->withTimestamps();
+        return $this->hasMany('App\Favorite');
     }
+    
+
 
     
 }

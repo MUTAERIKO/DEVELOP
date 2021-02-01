@@ -82,7 +82,21 @@ class KijiController extends Controller
         } else {
             $posts = Content::all()->sortByDesc('updated_at');
         }
-        return view('admin.kiji.index', ['posts' => $posts, 'cond_title' => $cond_title]);
+        
+        
+        
+        $data = [];
+        // ユーザの投稿の一覧を作成日時の降順で取得
+        //withCount('テーブル名')とすることで、リレーションの数も取得できます。
+        $content = Content::withCount('likes')->orderBy('created_at', 'desc')->paginate(10);
+        $like_model = new Favorite;
+
+        $data = [
+                'content' => $contents,
+                'like_model'=>$like_model,
+            ];
+    
+        return view('admin.kiji.index', ['posts' => $posts, 'cond_title' => $cond_title, "like_model" <= $like_model]);
     }
     
     

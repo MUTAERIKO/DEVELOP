@@ -16989,3 +16989,40 @@ readers do not read off random characters that represent icons */
   width: auto;
 }
 
+.grid-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 15px;
+}
+
+.grid-top li {
+  list-style-type:none;
+}
+
+.grid-top li img{
+  width:350px;
+}
+
+.title-on {
+  position:relative;
+  width:350px;
+}
+
+.title-on p {
+  position: absolute;/*絶対配置*/
+  color: white;/*文字は白に*/
+  top: 0;
+  left:0;
+  background-color: rgba(0,0,0,.6);
+  width:350px;
+  padding:10px;
+}
+
+.mainpageimage {
+  width:100%;
+  height:200px;  
+}
+
+.loved{
+  color:red;
+}
